@@ -1,0 +1,6 @@
+
+app/dist/
+app/build/
+app/__pycache__/
+app/*.spec
+app/*log
