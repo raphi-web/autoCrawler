@@ -70,12 +70,8 @@ def booking2gpkg():
             
     df = pd.DataFrame.from_dict(data_collection)
     geo_df = GeoDataFrame(df, geometry=points_from_xy(df.lon,df.lat)).set_crs("EPSG:4326")
-    try: 
-        os.mkdir("booking_hotels")
-    except:
-        pass
-
-    geo_df.to_file("booking_hotels/" + "booking_data.gpkg",driver="GPKG")
+    
+    geo_df.to_file("bookingHotels/" + "booking_data.gpkg",driver="GPKG")
     
     print("succesfully saved file!")
   
