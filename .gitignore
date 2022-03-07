@@ -1,6 +1,8 @@
 
 app/dist/
 app/build/
+app/bookingHotels/
+app/bookingData/
 app/__pycache__/
 app/*.spec
 app/*log

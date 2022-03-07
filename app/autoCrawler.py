@@ -53,7 +53,7 @@ def files2gpkg(_):
         print("Error Creating Geopackege")
         print(e)
         update_page_status(str(e))
-        if len(os.listdir("booking_hotels")) > 0:
+        if len(os.listdir("bookingHotels")) > 0:
             socketio.emit('download_ready', {'data': "download_ready"})
             
 def update_page_status(message):
@@ -83,7 +83,7 @@ def start_collecting():
 @app.route('/get-files/booking_data.gpkg',methods = ['GET','POST'])
 def get_files():
     try:
-        return send_from_directory("booking_hotels/","booking_data.gpkg",as_attachment=True)
+        return send_from_directory("bookingHotels/","booking_data.gpkg",as_attachment=True)
     except Exception as e:
         print(e)
         update_page_status(str(e))
@@ -96,11 +96,6 @@ def start_server():
     http_server.serve_forever()
 
 def booking_collect(nxt_pg_btn, map_btn, close_map_btn, json_name):
-    try:
-        os.mkdir("bookingData")
-    except:
-        pass
-
     page = 0
     try:
         next_page_btn = driver.find_element(By.CSS_SELECTOR, nxt_pg_btn)
@@ -144,6 +139,16 @@ def booking_collect(nxt_pg_btn, map_btn, close_map_btn, json_name):
 
     update_page_status(f"Done!")
 
+
+try:
+    os.mkdir("bookingData")
+except FileExistsError:
+    pass
+
+try:
+    os.mkdir("bookingHotels")
+except FileExistsError:
+    pass
 
 driver_name = "./geckodriver"
 sys.path.append(driver_name)
