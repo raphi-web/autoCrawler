@@ -23,12 +23,6 @@ app.config['SECRET_KEY'] = 'secret!'
 
 print("Copy Geckodriver to this Folder:\n", os.getcwd(), "\n\n")
 
-"""
-@socketio.on('message')
-def handle_my_custom_event(json):
-    print('received json: ' + str(json))
-"""
-
 @socketio.on("clear")
 def clear_folder(_):
     print("Cleared!")
