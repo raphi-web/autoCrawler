@@ -1,1 +1,0 @@
-/home/raphi/Dokumente/Programming/Python/scraping/auto-crawler/app/__init__.py
