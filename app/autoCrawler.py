@@ -12,7 +12,7 @@ import json
 import uuid
 from flask_socketio import SocketIO
 from selenium.common.exceptions import WebDriverException
-from flatten import booking2gpkg
+from flatten import booking2zip
 from geventwebsocket import WebSocketServer
 from engineio.async_drivers import gevent  # requirement for pyinstaller
 
@@ -51,11 +51,11 @@ def clear_folder(message):
         print("Error deleting files")
         print(e)
 
-@socketio.on("gpkg")
-def files2gpkg(_):
+@socketio.on("mkfile")
+def files2zip(_):
     try:
         print("Prepering Data")
-        booking2gpkg()
+        booking2zip()
         clear_folder("")
 
         socketio.emit('download_ready', {'data': "download_ready"})
@@ -65,6 +65,15 @@ def files2gpkg(_):
         update_page_status(str(e))
         if len(os.listdir("bookingHotels")) > 0:
             socketio.emit('download_ready', {'data': "download_ready"})
+
+@socketio.on("exit")
+def exit_browser(message):
+    try:
+        driver.quit()
+        sys.exit()
+    except Exception as e:
+        print("Error deleting files")
+        print(e)
 
 @app.route("/")
 def root():
@@ -88,7 +97,7 @@ def start_collecting():
     return "ok"
 
 
-@app.route('/get-files/booking_data.gpkg', methods=['GET', 'POST'])
+@app.route('/get-files/booking_data.zip', methods=['GET', 'POST'])
 def get_files():
     path = os.getcwd()
     file = path + "/bookingHotels/booking_data.zip"
@@ -159,6 +168,7 @@ def booking_collect(nxt_pg_btn, map_btn, close_map_btn, json_name, address_check
                 print("Error Collecting Request!", e)
                 update_page_status(str(e))
 
+            time.sleep(np.random.choice([x for x in range(1, 6)]))
             driver.find_element(By.CSS_SELECTOR, close_map_btn).click()
             time.sleep(np.random.choice([x for x in range(3, 9)]))
             next_page_btn = driver.find_element(By.CSS_SELECTOR, nxt_pg_btn)

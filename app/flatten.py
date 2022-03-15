@@ -1,4 +1,3 @@
-from ast import walk
 import json
 from flatten_json import flatten
 import os
@@ -30,7 +29,7 @@ def search(key, flat_hotel):
     return res
 
 
-def booking2gpkg():
+def booking2zip():
     directory = "bookingData/"
     files = os.listdir(directory)
 
@@ -122,6 +121,6 @@ def df2geojson(df):
         
         
 if __name__=="__main__":
-    booking2gpkg()
+    booking2zip()
     
         
