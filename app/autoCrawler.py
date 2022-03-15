@@ -26,22 +26,23 @@ import asyncio
 # span[class="d543a27a3a"]
 # div[data-testid="map-trigger"]
 
+
 app = Flask(__name__)
 socketio = SocketIO(app)
 app.config['SECRET_KEY'] = 'secret!'
 
-print("Copy Geckodriver to this Folder:\n", os.getcwd(), "\n\n")
 
 def update_page_status(message):
     socketio.emit('my_response', {'data': message})
 
+
 @socketio.on("connection")
-def send_conection_message(_):
+def send_conection_message(message):
     print("Connected to client!")
-  
+
 
 @socketio.on("clear")
-def clear_folder(_):
+def clear_folder(message):
     print("Cleared!")
     try:
         for f in os.listdir("bookingData"):
@@ -65,9 +66,6 @@ def files2gpkg(_):
         if len(os.listdir("bookingHotels")) > 0:
             socketio.emit('download_ready', {'data': "download_ready"})
 
-
-
-   
 @app.route("/")
 def root():
     return render_template("index.html")
@@ -89,10 +87,11 @@ def start_collecting():
 
     return "ok"
 
+
 @app.route('/get-files/booking_data.gpkg', methods=['GET', 'POST'])
 def get_files():
     path = os.getcwd()
-    file = path + "/bookingHotels/booking_data.gpkg"
+    file = path + "/bookingHotels/booking_data.zip"
     try:
         return send_file(file, as_attachment=True)
     except Exception as e:
@@ -109,7 +108,6 @@ def start_server():
 
 def booking_collect(nxt_pg_btn, map_btn, close_map_btn, json_name, address_check):
     page = 0
-
     try:
         next_page_btn = driver.find_element(By.CSS_SELECTOR, nxt_pg_btn)
         while next_page_btn.get_attribute("disabled") == None:
@@ -188,10 +186,11 @@ async def get_addresses():
                 class_="hp_address_subtitle").text.replace("\n", "")
             name_address[hotel_name] = hotel_address
         except Exception as e:
-            update_page_status("Error collecting, adress for one Hotel: " + str(e))
+            update_page_status(
+                "Error collecting, adress for one Hotel: " + str(e))
             print("Error collecting, adress for one Hotel: " + str(e))
             pass
-            
+
         return 0
     name_address = {}
     try:
@@ -213,6 +212,9 @@ async def get_addresses():
 
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
+
+
+print("Copy Geckodriver to this Folder:\n", os.getcwd(), "\n\n")
 
 
 try:
@@ -245,4 +247,3 @@ driver.get('https://www.booking.com/')
 time.sleep(1)
 driver.switch_to.window(tabs[0])
 th.join()
-
