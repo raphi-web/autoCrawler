@@ -13,10 +13,10 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma-rtl.min.css">
     </head>
     <body>
-        <section class="section"> 
+        <section class="section">
 
         <h1 class="title"> Booking.com Webcrawler </h1>
-        
+
         <form action="/start" method="post" target=frame class="myform">
 
             <div class="columns">
@@ -26,7 +26,7 @@
             </div>
 
             <div class="columns">
-                <div class="column is-two-fifths"><input  name="map_btn" class="input is-primary" type="text" value='span[class="d543a27a3a"]' placeholder="Primary input"></div>
+                <div class="column is-two-fifths"><input  name="map_btn" class="input is-primary" type="text" value='div[data-testid="map-trigger"]' placeholder="Primary input"></div>
                 <div class="column">Open Map Button</div>
                 <div class="column"></div>
             </div>
@@ -42,10 +42,10 @@
                 <div class="column">JSON Request Name</div>
                 <div class="column"></div>
             </div>
-         
+
             <div class="columns">
                 <div class="column is-two-fifths">
-                    <div style="margin-right:5px;">Seachrch for addresses?</div>    
+                    <div style="margin-right:5px;">Search for addresses?</div>    
                     <div class="radio" style="margin-right:5px;"><input type="radio" name="address" value="yes" style="margin-right:5px;">yes</div>
                     <div class="radio" style="margin-right:5px;"><input type="radio" name="address" value="no" style="margin-right:5px;" checked>no</div>
                 </div>
@@ -58,12 +58,12 @@
             <button class="button is-disabled" id="clear">Clear</button>
             <button class="button is-disabled" id="mkfile">To File</button>
             <button class="button is-danger" id="exit">Exit</button>
-        </div> 
-       
+        </div>
+
         <div id="log"></div>
 
         <iframe name="frame" src="" style="position: absolute;width:0;height:0;border:0;"></iframe>
- 
+
     </section>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>-->
@@ -72,4 +72,3 @@
         <script src="{{url_for('static', filename='frontend.js')}}"></script>
     </body>
 </html>
-
